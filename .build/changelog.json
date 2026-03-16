@@ -1,6 +1,380 @@
 {
-    "fromTag": "8.55.0",
+    "fromTag": "8.55.2",
     "changelog": {
+        "8.55.3": [
+            {
+                "pr": "18112",
+                "title": "Chasing clean audit",
+                "description": null,
+                "author": {
+                    "name": "RaananW",
+                    "url": "https://github.com/RaananW"
+                },
+                "files": [
+                    "package-lock.json"
+                ],
+                "tags": []
+            },
+            {
+                "pr": "18111",
+                "title": "Fix npm clean script",
+                "description": "Without excluding the root project it executes as well, which causes an interesting, recusrsive call.",
+                "author": {
+                    "name": "RaananW",
+                    "url": "https://github.com/RaananW"
+                },
+                "files": [
+                    "package.json"
+                ],
+                "tags": []
+            },
+            {
+                "pr": "18110",
+                "title": "Move manifold  default import to 3.4",
+                "description": null,
+                "author": {
+                    "name": "deltakosh",
+                    "url": "https://github.com/deltakosh"
+                },
+                "files": [
+                    "packages/dev/core/src/Meshes/csg2.ts"
+                ],
+                "tags": [
+                    "skip changelog"
+                ]
+            },
+            {
+                "pr": "18092",
+                "title": "Migrate Azure DevOps classic CI/CD pipelines to YAML",
+                "description": "Converts all Azure DevOps classic pipeline definitions to checked-in YAML files and introduces shared templates to reduce duplication.\r\n\r\n## Converted Pipelines\r\n\r\n| Classic Pipeline | Definition ID | YAML File |\r\n|---|---|---|\r\n| CI-Monorepo | 14 | `.azure-pipelines/ci-monorepo.yml` | | Playground-Sandbox-CI | 32 | `.azure-pipelines/ci-playground-sandbox.yml` | | GraphTools-CI | 33 | `.azure-pipelines/ci-graph-tools.yml` | | Documentation-CI | 30 | `.azure-pipelines/ci-documentation.yml` | | Browser Testing | 27 | `.azure-pipelines/ci-browser-testing.yml` | | Publish Pipeline | 15 | `.azure-pipelines/cd-publish.yml` | | CD-Tools | 16 | `.azure-pipelines/cd-tools.yml` |\r\n\r\n> **Note:** The Documentation-CI pipeline (definition 30) targets the `BabylonJS/Documentation` repo. The YAML file is included here for reference but should be placed in that repository.\r\n\r\n## Shared Templates\r\n\r\nExtracted repeated patterns into reusable step templates under `.azure-pipelines/templates/`:\r\n\r\n- **`deploy-tool.yml`** — Zips a tool's `dist/` + `public/` directories, uploads to the deployment server, and optionally purges a CDN endpoint\r\n- **`upload-test-results.yml`** — Zips and uploads a Playwright report directory (with fallback path support)\r\n- **`check-snapshot-exists.yml`** — Queries the deployment server for snapshot existence and sets a pipeline variable\r\n- **`wait-for-snapshot.yml`** — Polls a snapshot URL with retries until it becomes available\r\n\r\n## Migration Tracking\r\n\r\nTODOs:\r\n- Per-pipeline setup tasks (secret variables, service connections, fork/PR settings)\r\n- Schedule verification (cron expressions mapped from classic `daysToBuild` bitmasks)\r\n- Post-migration cleanup (disabling classic pipelines, removing disabled jobs)\r\n- Remaining work (Pipeline 36 for Native test artifacts)\r\n\r\n## What's NOT included\r\n\r\n- No classic pipelines are disabled or deleted — this PR only adds the YAML equivalents\r\n- Pipeline secret variables (`BASIC_AUTH`, `DEPLOYMENT_SERVER`, `BROWSERSTACK_*`, `GitHubPAT`, `NPM_TOKEN`, etc.) must be configured in the Azure DevOps pipeline UI before enabling\r\n- `resources.pipelines` source names contain `TODO` placeholders that need to be updated with actual pipeline names\r\n- Steps that were disabled in the classic pipelines are preserved as comments in the YAML for reference",
+                "author": {
+                    "name": "RaananW",
+                    "url": "https://github.com/RaananW"
+                },
+                "files": [
+                    ".azure-pipelines/VARIABLE-GROUPS.md",
+                    ".azure-pipelines/cd-publish.yml",
+                    ".azure-pipelines/cd-tools.yml",
+                    ".azure-pipelines/ci-browser-testing.yml",
+                    ".azure-pipelines/ci-graph-tools.yml",
+                    ".azure-pipelines/ci-monorepo.yml",
+                    ".azure-pipelines/ci-playground-sandbox.yml",
+                    ".azure-pipelines/templates/check-snapshot-exists.yml",
+                    ".azure-pipelines/templates/deploy-tool.yml",
+                    ".azure-pipelines/templates/upload-test-results.yml",
+                    ".azure-pipelines/templates/wait-for-snapshot.yml"
+                ],
+                "tags": []
+            },
+            {
+                "pr": "18109",
+                "title": "Edge Detection post-process: Fix crash in WebGPU",
+                "description": "See https://forum.babylonjs.com/t/edge-detection-post-process-with-webgpu-not-work/62729",
+                "author": {
+                    "name": "Popov72",
+                    "url": "https://github.com/Popov72"
+                },
+                "files": [
+                    "packages/dev/postProcesses/src/edgeDetection/edgeDetection.fragment.fx",
+                    "packages/dev/postProcesses/src/edgeDetection/edgeDetectionPostProcess.ts"
+                ],
+                "tags": [
+                    "bug",
+                    "WebGPU",
+                    "post-process"
+                ]
+            },
+            {
+                "pr": "18107",
+                "title": "WebGPU: Better typings for Safari when creating a render pipeline",
+                "description": "These small changes could improve things with Safari, which seems to be stricter than Chrome when creating a render pipeline.",
+                "author": {
+                    "name": "Popov72",
+                    "url": "https://github.com/Popov72"
+                },
+                "files": [
+                    "packages/dev/core/src/Engines/WebGPU/webgpuCacheRenderPipeline.ts"
+                ],
+                "tags": [
+                    "skip changelog"
+                ]
+            },
+            {
+                "pr": "18106",
+                "title": "Occlusion Query: allow queries to be performed for a specific render pass",
+                "description": "See https://forum.babylonjs.com/t/reflections-occlusion-query-bug/62744/4",
+                "author": {
+                    "name": "Popov72",
+                    "url": "https://github.com/Popov72"
+                },
+                "files": [
+                    "packages/dev/core/src/Engines/AbstractEngine/abstractEngine.query.ts",
+                    "packages/dev/core/src/Meshes/abstractMesh.ts",
+                    "packages/dev/core/src/Meshes/mesh.ts"
+                ],
+                "tags": [
+                    "enhancement",
+                    "rendering engine"
+                ]
+            },
+            {
+                "pr": "18105",
+                "title": "fix planeRotation regression",
+                "description": "fix regression introduced by https://github.com/BabylonJS/Babylon.js/pull/17982",
+                "author": {
+                    "name": "CedricGuillemet",
+                    "url": "https://github.com/CedricGuillemet"
+                },
+                "files": [
+                    "packages/dev/core/src/Gizmos/planeRotationGizmo.ts"
+                ],
+                "tags": [
+                    "bug",
+                    "skip changelog"
+                ]
+            },
+            {
+                "pr": "18104",
+                "title": "Feat/inspector add alphaCutOff",
+                "description": "In alphaTest transparency mode, an alphaCutOff option has been added;\r\nWe’ve also fixed an issue where text in scene tree nodes wasn’t fully displayed when it was too long, and added a tooltip.",
+                "author": {
+                    "name": "Jeggery",
+                    "url": "https://github.com/Jeggery"
+                },
+                "files": [
+                    "packages/dev/inspector-v2/src/components/properties/materials/materialProperties.tsx",
+                    "packages/dev/inspector-v2/src/components/scene/sceneExplorer.tsx"
+                ],
+                "tags": []
+            },
+            {
+                "pr": "18102",
+                "title": "glTF loading: Fix loading base64 data uri",
+                "description": "See https://forum.babylonjs.com/t/no-rendering-glb-with-images-on-chrome-146/62763/12",
+                "author": {
+                    "name": "Popov72",
+                    "url": "https://github.com/Popov72"
+                },
+                "files": [
+                    "packages/dev/loaders/src/glTF/2.0/glTFLoader.ts",
+                    "packages/dev/loaders/test/integration/babylon.sceneLoader.test.ts",
+                    "packages/dev/loaders/test/integration/testData.ts"
+                ],
+                "tags": [
+                    "bug",
+                    "loaders",
+                    "glTF"
+                ]
+            }
+        ],
+        "8.55.2": [
+            {
+                "pr": "18095",
+                "title": "New engine change dialog replacing the old modal",
+                "description": "PR written by AI. Reviewed and tested manually by me:\r\n\r\n- Check that the dialog appears correctly in the same scenarios.\r\n- Check that selecting both options of the dialog actually set the engine correctly.\r\n\r\nOld UI:\r\n<img width=\"822\" height=\"366\" alt=\"Old\" src=\"https://github.com/user-attachments/assets/8f4c3f91-c6d7-442c-9a2b-d69a60f3eb26\" />\r\n\r\nNew UI:\r\n<img width=\"1432\" height=\"766\" alt=\"New\" src=\"https://github.com/user-attachments/assets/919646a6-b0f6-433e-b05d-8d8d54779937\" />\r\n\r\n## Summary\r\n\r\nThis PR improves the Playground dialog shown when loading a snippet that was saved with a different engine than the one currently selected, and avoids showing that dialog again when the user has just explicitly changed the engine from the Playground UI.\r\n\r\n## Why\r\n\r\nThe previous prompt used a browser-native confirm with generic OK / Cancel buttons, which made the choice hard to understand. In particular, it was not obvious which engine each option would use.\r\n\r\nAlso, after the new dialog was introduced, it could appear in a user-initiated engine-switch flow even though that path had already shown the existing unsaved-state confirmation.\r\n\r\n## What changed\r\n\r\n- Replaced the browser-native confirm with a Playground-styled dialog.\r\n- Updated the copy to clearly explain that the loaded playground was saved with a different rendering engine.\r\n- Changed the actions from OK / Cancel to explicit engine choices such as Use WebGL2 / Use WebGPU.\r\n- Kept the saved-engine option as the default focused action.\r\n- Skipped this dialog when the load happens immediately after a user explicitly changes the engine from the Playground UI.\r\n\r\n## Behavior\r\n\r\nThere are no logic changes in when this dialog is shown or what each choice does.\r\n\r\nThe dialog is still shown only when:\r\n\r\n- the loaded snippet declares an engine,\r\n- the URL is not already forcing an engine, and\r\n- the snippet engine differs from the currently selected engine.\r\n- the load is not the immediate result of a user-initiated engine switch in the Playground UI.\r\n\r\nWhen the user changes the engine directly from the Playground UI, the existing unsaved-state confirmation remains the only prompt shown for that flow.",
+                "author": {
+                    "name": "VicenteCartas",
+                    "url": "https://github.com/VicenteCartas"
+                },
+                "files": [
+                    "packages/tools/playground/src/components/commandBarComponent.tsx",
+                    "packages/tools/playground/src/components/engineSwitchDialog.tsx",
+                    "packages/tools/playground/src/components/hamburgerMenu.tsx",
+                    "packages/tools/playground/src/globalState.ts",
+                    "packages/tools/playground/src/playground.tsx",
+                    "packages/tools/playground/src/scss/dialogs.scss",
+                    "packages/tools/playground/src/tools/loadManager.ts",
+                    "packages/tools/playground/src/tools/utilities.ts"
+                ],
+                "tags": []
+            },
+            {
+                "pr": "18099",
+                "title": "Unclamp luminance",
+                "description": "The `getLuminance` shader helper saturates the final color. The atmosphere shader is expecting an unclamped result.",
+                "author": {
+                    "name": "kircher1",
+                    "url": "https://github.com/kircher1"
+                },
+                "files": [
+                    "packages/dev/addons/src/atmosphere/Shaders/ShadersInclude/atmosphereFunctions.fx",
+                    "packages/dev/addons/src/atmosphere/Shaders/diffuseSkyIrradiance.fragment.fx",
+                    "packages/dev/addons/src/atmosphere/ShadersWGSL/ShadersInclude/atmosphereFunctions.fx",
+                    "packages/dev/addons/src/atmosphere/ShadersWGSL/diffuseSkyIrradiance.fragment.fx",
+                    "packages/dev/addons/src/atmosphere/atmospherePBRMaterialPlugin.ts",
+                    "packages/dev/core/src/Shaders/ShadersInclude/helperFunctions.fx",
+                    "packages/dev/core/src/ShadersWGSL/ShadersInclude/helperFunctions.fx"
+                ],
+                "tags": []
+            },
+            {
+                "pr": "18098",
+                "title": "Initial workflow config for skills",
+                "description": null,
+                "author": {
+                    "name": "AmoebaChant",
+                    "url": "https://github.com/AmoebaChant"
+                },
+                "files": [
+                    ".github/workflow-config.md"
+                ],
+                "tags": []
+            },
+            {
+                "pr": "18034",
+                "title": "Decouple smart-filters buildTools from circular dependency chain",
+                "description": "Reducing coupling of smart filters asset build process.\r\n\r\nThis will get unit tests to run faster when running `npm run test:unit`, and will prevent public packages to be built just to get the smart filters build system to compile.\r\n\r\nWhen used locally, we are using console.log, but when used inside the package, it will use Babylon's Logger.",
+                "author": {
+                    "name": "RaananW",
+                    "url": "https://github.com/RaananW"
+                },
+                "files": [
+                    "package.json",
+                    "packages/dev/smartFilters/src/blockFoundation/blockDisableStrategy.ts",
+                    "packages/dev/smartFilters/src/blockFoundation/disableableShaderBlock.ts",
+                    "packages/dev/smartFilters/src/serialization/importCustomBlockDefinition.ts",
+                    "packages/dev/smartFilters/src/utils/buildTools/buildToolsLogger.ts",
+                    "packages/dev/smartFilters/src/utils/buildTools/convertGlslIntoBlock.ts",
+                    "packages/dev/smartFilters/src/utils/buildTools/convertGlslIntoShaderProgram.ts",
+                    "packages/dev/smartFilters/src/utils/buildTools/convertShaders.ts",
+                    "packages/dev/smartFilters/src/utils/buildTools/shaderConverter.ts",
+                    "packages/dev/smartFilters/src/utils/buildTools/watchShaders.ts",
+                    "packages/dev/smartFilters/tsconfig.buildTools.json",
+                    "packages/public/@babylonjs/smart-filters/package.json",
+                    "tsconfig.build.json",
+                    "tsconfig.json"
+                ],
+                "tags": []
+            },
+            {
+                "pr": "18097",
+                "title": "Ignore playwright temp files",
+                "description": null,
+                "author": {
+                    "name": "AmoebaChant",
+                    "url": "https://github.com/AmoebaChant"
+                },
+                "files": [
+                    ".gitignore"
+                ],
+                "tags": []
+            },
+            {
+                "pr": "18096",
+                "title": "Volumetric Lighting: Check for support and throw descriptive error",
+                "description": "We already have a `FrameGraphVolumetricLightingTask.IsSupported` check, but if you don't know you need to check this, then eventually we just fail in a WebGPU call that is really hard to diagnose and understand what is going on. This change simply does the IsSupported check in the constructor and throws a descriptive error telling the user what went wrong and how to defend against the error.",
+                "author": {
+                    "name": "ryantrem",
+                    "url": "https://github.com/ryantrem"
+                },
+                "files": [
+                    "packages/dev/core/src/FrameGraph/Tasks/PostProcesses/volumetricLightingTask.ts"
+                ],
+                "tags": []
+            },
+            {
+                "pr": "18093",
+                "title": "Geo cam keyboard fix on mac",
+                "description": "Ctrl+ArrowKey is reserved for mission control on Mac, so it wasn't resulting in rotation in geospatial camera.\r\n\r\nThis fix adds the 'alt/option' modifier key",
+                "author": {
+                    "name": "georginahalpern",
+                    "url": "https://github.com/georginahalpern"
+                },
+                "files": [
+                    "packages/dev/core/src/Cameras/Inputs/geospatialCameraKeyboardInput.ts"
+                ],
+                "tags": [
+                    "bug",
+                    "camera"
+                ]
+            },
+            {
+                "pr": "18086",
+                "title": "Playground: Try fixing problems with playground loading",
+                "description": "Some people (myself included) have noticed that sometimes we get stuck on the (full screen) global loading page when loading a PG. We have to refresh the page for it to work. Other times, the editor displays correctly, with the correct code, but the render view displays the default PG view (a sphere + a plane). We have to click “Play” to see the correct rendering.\r\n\r\nThis PR attempts to fix this, with the help of AI. In fact, the AI wrote everything, and since I don't know how the Playground works, I'll let others decide whether this PR makes sense or not.\r\n\r\ncc @ryantrem and @RaananW.\r\n\r\nFor your information, here is the AI's statement regarding the first issue, before it was corrected:\r\n-----------\r\n● Yes — the source does explain your symptom.\r\n\r\n  WaitRingComponent starts visible by default, and the spinner is not hidden when the playground code finishes loading. It only gets hidden later from rendererComponent.tsx after  _compileAndRunAsync() finishes.\r\n\r\n  So this exact state is possible: the snippet was fetched and hydrated into Monaco (loadManager.ts + monacoManager.ts), but the run phase is still pending. If _compileAndRunAsync() is stuck  awaiting runner.run(...), _preventReentrancy stays true, so clicking Play does nothing.\r\n\r\n  The likely culprits are awaits in tools\\monaco\\run\\runner.ts: external script/module loads, import()/importShim, or an async createScene() that never resolves. Also, loadManager.ts uses XHR  with no timeout / non-200 handling.\r\n\r\n  If you want, I can patch this.\r\n\r\n---------\r\nStatement after fixing it:\r\n------------\r\n● I patched the playground so it fails safe instead of hanging forever.\r\n\r\n  In packages\\tools\\playground\\src\\tools\\loadManager.ts, I added snippet-load timeout/error handling and made async payload processing/hydration failures clear the loading state.\r\n\r\n  In packages\\tools\\playground\\src\\components\\rendererComponent.tsx, I wrapped runnable creation and scene execution with timeouts, so a hung auto-run now resets _preventReentrancy, hides the overlay, and shows an error instead of leaving Play dead.\r\n\r\n  I also added a regression check in packages\\tools\\playground\\test\\interactions.playground.test.ts that the wait ring is hidden after desktop load.\r\n\r\n  Validation: IDE diagnostics were clean; playground Playwright project ran with 3 passed, 1 flaky (passed on retry).\r\n\r\n------------\r\n\r\nNow for the second problem, the statement before fixing it:\r\n---------\r\n● Yes — but only partly. (<= it answers this way because I asked if the first fix would also fix the second problem)\r\n\r\n  That symptom is more likely a related startup race, not the exact hang I just fixed.\r\n\r\n  In monacoManager.ts, startup can schedule _setDefaultContent() at line 643, and _setDefaultContent() immediately triggers a run at line 746. If that default run starts first, then the real snippet hydration later calls onRunRequiredObservable, rendererComponent.tsx drops it because _preventReentrancy is still true (174-178).\r\n\r\n  That leaves you with:\r\n\r\n   - correct code in the editor\r\n   - default sphere/ground still rendered\r\n   - manual Play finally runs the real PG\r\n\r\n  So: same family of race, but not fully solved by the timeout fix. I can patch this next.\r\n\r\n---------\r\nand after the fix:\r\n---------\r\n● Yes — I patched that race too.\r\n\r\n  The change is in packages\\tools\\playground\\src\\components\\rendererComponent.tsx: if onRunRequiredObservable fires while a run is already in progress, the request is now queued instead of being dropped. When the current run finishes, the queued run is executed immediately.\r\n\r\n  That means if the default scene starts first and the real snippet hydrates a moment later, the snippet run is no longer lost behind _preventReentrancy.\r\n\r\n  Validation was good:\r\n\r\n   - VS Code diagnostics: clean\r\n   - Existing playground Playwright project: 4/4 passed\r\n\r\n  So this should address the “editor shows correct code, renderer still shows default scene until Play” case too.\r\n",
+                "author": {
+                    "name": "Popov72",
+                    "url": "https://github.com/Popov72"
+                },
+                "files": [
+                    "packages/tools/playground/src/components/rendererComponent.tsx",
+                    "packages/tools/playground/src/tools/loadManager.ts",
+                    "packages/tools/playground/test/interactions.playground.test.ts"
+                ],
+                "tags": [
+                    "bug",
+                    "Playground"
+                ]
+            },
+            {
+                "pr": "18091",
+                "title": "Shadows: Fix crash when creating a shadow depth wrapper",
+                "description": "See https://forum.babylonjs.com/t/shadowdepthwrapper-getting-error-with-an-async-adding-with-standalone-true/62769",
+                "author": {
+                    "name": "Popov72",
+                    "url": "https://github.com/Popov72"
+                },
+                "files": [
+                    "packages/dev/core/src/Materials/Node/nodeMaterial.ts",
+                    "packages/dev/core/src/Materials/shadowDepthWrapper.ts",
+                    "packages/dev/core/src/Meshes/subMesh.ts"
+                ],
+                "tags": [
+                    "bug",
+                    "shadows"
+                ]
+            },
+            {
+                "pr": "18088",
+                "title": "Unregister each gltf extension before registering",
+                "description": "`registerBuiltInGLTFExtensions` registers every gltf extension, but if they are already registered, then the automatic unregistration logs a warning. In this case, if you call `registerBuiltInGLTFExtensions` multiple times, e.g. in different independent code, to *ensure* they are registered, it logs a lot of warnings to the console. By explicitly unregistering first, it avoids logging all these warnings.\r\n\r\nExtension registration improvements:\r\n\r\n* Added calls to `unregisterGLTFExtension` for each extension before calling `registerGLTFExtension`, ensuring that any previous registration is cleared and preventing duplicate extension registrations. (`packages/dev/loaders/src/glTF/2.0/Extensions/dynamic.ts`)\r\n* Updated the import statement to include `unregisterGLTFExtension` from `glTFLoaderExtensionRegistry`. (`packages/dev/loaders/src/glTF/2.0/Extensions/dynamic.ts`)",
+                "author": {
+                    "name": "ryantrem",
+                    "url": "https://github.com/ryantrem"
+                },
+                "files": [
+                    "packages/dev/loaders/src/glTF/2.0/Extensions/dynamic.ts"
+                ],
+                "tags": [
+                    "loaders",
+                    "skip changelog"
+                ]
+            },
+            {
+                "pr": "18089",
+                "title": "Simplify array membership check using includes()",
+                "description": "## Code Simplification - 2026-03-13\n\nThis PR simplifies recently modified code to improve clarity and modernize array membership checking while preserving all functionality.\n\n### Files Simplified\n\n- `packages/dev/core/src/Engines/webgpuEngine.ts` - Replaced `indexOf() !== -1` with `includes()` for checking dual source blending extension support\n\n### Improvements Made\n\n**Enhanced Clarity**\n- Replaced `indexOf() !== -1` pattern with the more modern and readable `Array.includes()` method\n- This simplification improves code readability by using a method specifically designed for membership checking\n- The intent of the code is clearer: we're checking if an item exists in an array, not finding its position\n\n### Changes Based On\n\nRecent changes from:\n- #18082 - WebGPU: Fix dual source blending detection\n\nThis PR refines code modified in PR #18082, which added runtime detection for dual source blending support in WebGPU.\n\n### Testing\n\n- ✅ Functionally equivalent - `includes()` returns the same boolean result as `indexOf() !== -1`\n- ✅ No behavioral changes - the logic remains identical\n- ✅ Modern JavaScript best practice - `includes()` has been the standard since ES2016\n\n### Review Focus\n\nPlease verify:\n- Functionality is preserved (both patterns produce identical results)\n- Simplification improves code readability\n- Change aligns with modern JavaScript conventions\n\n### Technical Note\n\nThe change replaces:\n````typescript\nthis._deviceEnabledExtensions.indexOf(WebGPUConstants.FeatureName.DualSourceBlending) !== -1\n````\n\nWith:\n````typescript\nthis._deviceEnabledExtensions.includes(WebGPUConstants.FeatureName.DualSourceBlending)\n````\n\nBoth expressions return `true` if the extension is present in the array, `false` otherwise. The `includes()` method is:\n- More semantic (explicitly checks membership rather than position)\n- More readable (clearer intent)\n- Standard practice in modern JavaScript/TypeScript codebases\n\n---\n\n*Automated by Code Simplifier Agent - analyzing code from the last 24 hours*\n\n\n<!-- gh-aw-tracker-id: code-simplifier -->\n\n\n> AI generated by [Code Simplifier](https://github.com/BabylonJS/Babylon.js/actions/runs/23031037870)\n> - [x] expires <!-- gh-aw-expires: 2026-03-14T00:58:50.142Z --> on Mar 14, 2026, 12:58 AM UTC\n\n<!-- gh-aw-expires-type: pull-request -->\n\n<!-- gh-aw-workflow-id: code-simplifier -->",
+                "author": {
+                    "name": "github-actions[bot]",
+                    "url": "https://github.com/apps/github-actions"
+                },
+                "files": [
+                    "packages/dev/core/src/Engines/webgpuEngine.ts"
+                ],
+                "tags": [
+                    "refactoring",
+                    "code-quality",
+                    "automation"
+                ]
+            },
+            {
+                "pr": "18084",
+                "title": "Viewer Configurator: Reduce allowed min width",
+                "description": "- Reduce the min width from 900px to 600px (before blocking the app).\r\n- Only make the top snippet part of the side pane sticky (out of the scrolling area) if there is enough vertical space. Otherwise, don't make it sticky so it scrolls with the rest of the content. This is needed so we don't have a sticky top part and not enough room for the scrolling part to be useful.",
+                "author": {
+                    "name": "ryantrem",
+                    "url": "https://github.com/ryantrem"
+                },
+                "files": [
+                    "packages/tools/viewer-configurator/src/App.scss",
+                    "packages/tools/viewer-configurator/src/App.tsx",
+                    "packages/tools/viewer-configurator/src/components/configurator/configurator.scss"
+                ],
+                "tags": [
+                    "viewer"
+                ]
+            }
+        ],
         "8.55.1": [
             {
                 "pr": "18082",
